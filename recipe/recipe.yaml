@@ -1,0 +1,43 @@
+schema_version: 1
+
+context:
+  name: merge-args
+  version: "0.1.5"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/merge_args-${{ version }}.tar.gz
+  sha256: ad37e6c4c7f1eadda5a0564b26ca7d56f8a37f232f5c5c46f9ef93d352757c23
+
+build:
+  number: 2
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - setuptools
+  run:
+    - python >=${{ python_min }}
+
+tests:
+  - python:
+      imports:
+        - merge_args
+      pip_check: true
+      python_version: ${{ python_min }}
+
+about:
+  summary: Merge signatures of two functions with Advanced Hackery.
+  license: BSD-3-Clause
+  license_file: LICENSE
+  homepage: https://github.com/Kwpolska/merge_args
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
